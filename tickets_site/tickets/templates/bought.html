@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p class="confirm"><b>Objednávka bola úspešne zaregistrovaná.</b></p>
+    <h2>Zoznam objednávok</h2>
+    <table>
+        <colgroup>
+        <col span="6">
+        <col text-align="right" />
+        </colgroup>
+        <tr><th>Meno</th><th>Vek</th><th>Názov podujatia</th><th>Dospelí</th><th>Študenti</th><th>Deti</th><th>Cena spolu</th></tr>
+    {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.name }}</td>
+            <td>{{ ticket.age|default_if_none:"-" }}</td>
+            <td>{{ ticket.event_name }}</td>
+            <td>{{ ticket.adult|default:"-" }}</td>
+            <td>{{ ticket.student|default:"-" }}</td>
+            <td>{{ ticket.child|default:"-" }}</td>
+            <td>{{ ticket.price }} €</td></tr>
+    {% endfor %}
+    </table><br/>
+    <p><a href="/buy/">Pokračovať v nákupe -></a></p>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Zrušenie podujatia</h2>
+    <p>Tu je možné zmazať ľubovoľné skončené či nasledujúce podujatie.</p>
+    <form method="post" action="/delete/">{% csrf_token %}
+        <p><label for="event">Podujatie</label></p>
+        <select name="event">
+        {% for event in events %}<option value="{{ event.id }}">{{ event.name }}</option>
+        {% endfor %}</select><br /><br />
+        <p><button type="submit" name="submit" value="Zrušiť podujatie" id ="submit_delete_button">Zrušiť podujatie</button></p>
+    </form>
+{% endblock %}

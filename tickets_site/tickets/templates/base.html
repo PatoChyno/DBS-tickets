@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "css/style.css" %}" />
+    <title>Vstupenky{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div id="container">
+    <header><h1><img src="{% static "database.png" %}" id="db_image" /> DBS - vstupenky</h1>
+    </header>
+    <nav>
+        {% block nav %}
+        <ul>
+            <li><a href="/">Hlavná stránka</a></li>
+            <li><a href="/buy/">Kúpiť vstupenky</a></li>
+            <li><a href="/update/">Nastaviť ceny vstupeniek</a></li>
+            <li><a href="/delete/">Zrušiť podujatie</a></li>
+            <li><a href="/stats/">Štatistiky</a></li>
+        </ul>
+        {% endblock %}
+    </nav>
+
+    <section id="content">
+	 <article align="justify">
+        {% block content %}{% endblock %}
+	</article>
+    </section>
+    <aside>
+	<h2>Čo je DBS?</h2>
+	<p><a href="http://dbs-fiit.github.io">DBS - databázové systémy</a> - je predmet vyučovaný v 2. ročníku programu FIIT INFO.</p>
+    </aside>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} - nastavenie cien{% endblock %}
+{% block content %}
+    <h2>Nastavenie cien vstupeniek</h2>
+    <p>Nasledujúci formulár poskytuje možnosť nastavenia ceny vstupeniek.</p>
+    <div id="update-wrapper">
+    <div class="upper_div"><br /><br />
+    <h3>Nastavenie cien</h3>
+        <form method="post" action="/update/">{% csrf_token %}
+        <p><label for="event">Podujatie v čase</label><br />
+        <select name="event">
+        {% for event in events %}	<option value="{{ event.id }}">{{ event.name }} ({{ event.start_date|date:"j.n.Y" }} - {{ event.end_date|date:"j.n.Y" }})</option>
+        {% endfor %}</select>
+        <div id="opt_left">
+            <p><label for="adults">Dospelí:</label><br/>
+            <input type="number" name="adults" value="" min="0"></p>
+        </div>
+        <div id="opt_center">
+            <p><label for="students">Študenti:</label><br/>
+            <input type="number" name="students" value="" min="0"></p>
+        </div>
+        <div id="opt_right">
+            <p><label for="children">Deti:</label><br/>
+            <input type="number" name="children" value="" min="0"></p>
+        </div></p>
+        <p><button type="submit" name="submit" value="Kúpiť vstupenky" id ="submit_update_button">Nastaviť ceny</button></p>
+        </form>
+   </div>
+
+    <div id="lower_div">
+    <h3>Tabuľka aktuálnych cien</h3>
+    <table>
+        <tr><th>Názov podujatia</th><th>Od</th><th>Do</th><th>Dospelí</th><th>Študenti</th><th>Deti</th></tr>
+    {% for price in prices %}
+        <tr>
+            <td>{{ price.event_name }}</td>
+            <td class="right">{{ price.start_date|date:"j.n.Y" }}</td>
+            <td class="right">{{ price.end_date|date:"j.n.Y" }}</td>
+            <td class="right">{{ price.adult|default:"-" }} &euro;</td>
+            <td class="right">{{ price.student|default:"-" }} &euro;</td>
+            <td class="right">{{ price.child|default:"-" }} &euro;</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+   </div>
+{% endblock %}

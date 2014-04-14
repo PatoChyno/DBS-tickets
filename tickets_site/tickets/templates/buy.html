@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %} - nákup{% endblock %}
+
+{% block content %}
+    <h2>Nákup vstupeniek</h2>
+    <p>Nasledujúci formulár umožňuje používateľovi kúpiť si vstupenku na ľubovoľné podujatie z ponuky.<br />
+	Z údajov o objednávateľovi stačí zadať len meno zákazníka; dátum narodenia, pohlavie a číslo telefónu sú nepovinné položky.<br />
+	Pri možnostiach objednávky sa volí len názov podujatia a počet osôb z ponúkaných cenových kategórií.</p>
+    <div id="wrapper">
+    <div id="left_div">
+    <h3>Údaje o objednávateľovi</h3>
+    <form method="post" action="/buy/">{% csrf_token %}
+        <p><label for="name">Meno zákazníka:</label>
+        <input type="text" name="name" class="aligned" value="{{ form.name.value | default_if_none:"" }}" /></p>
+        <p><label for="birthday">Dátum narodenia:</label>
+        <input type="date" name="birthday" class="aligned" value="{{ form.birthday.value | default_if_none:"" }} "/></p>
+        <p><label for="gender">Pohlavie:</label>
+        <input type="radio" name="gender" value="m" />muž
+        <input type="radio" name="gender" value="ž" />žena</p>
+        <p><label for="phone">Telefónne číslo:</label>
+        <input type="text" name="phone" class="aligned"/></p>
+    </div>
+    <div id="right_div">
+    <h3>Možnosti objednávky</h3>
+        <p><label for="event">Podujatie</label><br />
+        <select name="event">
+        {% for event in events %}<option value="{{ event.id }}">{{ event.name }}</option>
+        {% endfor %}</select>
+        <div id="opt_left">
+            <p><label for="adults">Dospelí:</label><br/>
+            <input type="number" name="adults" value="1" min=0></p>
+        </div>
+        <div id="opt_center">
+            <p><label for="students">Študenti:</label><br/>
+            <input type="number" name="students" value="0" min=0></p>
+        </div>
+        <div id="opt_right">
+            <p><label for="children">Deti:</label><br/>
+            <input type="number" name="children" value="0" min=0></p>
+        </div></p>
+        <p><button type="submit" name="submit" value="Kúpiť vstupenky" id ="submit_buy_button">Kúpiť vstupenky</button></p>
+   </form>
+   </div>
+   </div>
+{% endblock %}
